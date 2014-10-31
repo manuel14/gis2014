@@ -11,8 +11,15 @@
     
     /* selector CSS #map: selecciona cualquier elemento con id="map" */
       #map {
-        height: 400px;	/* alto del elemento = 400px */
-        width: 100%;	/* ancho del elemento = 100% de su elemento contenedor */
+        height: 400px;
+        width: 75%;
+        float: left;
+      }
+      #panel{
+        height: 400px;
+        width: 25%;
+        float: right;
+        background-color: #EEE;
       }
     </style>
     <!-- Titulo de la paginan -->
@@ -28,56 +35,14 @@
     
     <!-- DIV que contiene el mapa -->
     <div id="map"></div>
-    
+    <div id="panel">
+      <h3>Capas</h3>
+      <input type="checkbox" id="check_layer_1"><label for="check_layer_1"> Red Vial</label><br/>
+      <input type="checkbox" id="check_layer_2"><label for="check_layer_2">Vegetacion Hidrofila</label><br/>
+      <input type="checkbox" id="check_layer_3"><label for="check_layer_3">Vegetacion Arborea</label><br/>
+    </div>
     <!-- SCRIPT que crea el mapa y sus capas -->
-    <script type="text/javascript">
-    //diccionario de capas
-      var capas = new Array();
-      capas[1]='Red_Vial';
-      capas[2]='veg_Hidrofila';
-      capas[3]='Veg_Arborea';
-    //funcion que devuelve un arreglo de capas  
-      function listarcapas(){
-        var i = 1; 
-        var capa = new ol.layer.Tile({
-            title: "Global Imagery",
-            source: new ol.source.TileWMS({
-              url: 'http://maps.opengeo.org/geowebcache/service/wms',
-              params: { 
-              LAYERS: 'bluemarble',
-              VERSION: '1.1.1'
-        }
-            })
-          })
-
-        var layer = new Array();
-        layer[0] = capa;
-
-        for (i=1;i<=3;i++) {
-          var capa = new ol.layer.Image({  
-            title: capas[i],
-            source: new ol.source.ImageWMS({
-            url: '/cgi-bin/qgis_mapserv.fcgi?map=/home/user/proyectoqgislaboratorioqgisserver.qgs',
-            params: {LAYERS: capas[i]}
-            })
-          })
-          
-      layer[i] = capa;
-        
-      }
-      return layer;
-    }
-	// definicion del mapa 
-      
-      var map = new ol.Map({
-        target: 'map', 
-        layers: listarcapas() ,
-        view: new ol.View({
-          projection: 'EPSG:4326',
-          center: [-59, -27.5],
-          zoom: 4
-        })
-      });
-    </script>
+    <script type="text/javascript" src="tpi.js"></script> 
+    
   </body>
 </html>
